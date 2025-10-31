@@ -6,6 +6,9 @@ from ydata_profiling import ProfileReport
 
 df = pd.read_csv("./Data/Parsed/parsed_data.csv")
 
+print(df['severity'].value_counts())
+print(f"Number of samples: {len(df)}")
+
 profile = ProfileReport(df, title="Vulnerability Data Profile Report")
 profile.to_file("./Data/Parsed/vulnerability_data_profile_report.html")
 
@@ -22,7 +25,7 @@ plt.xticks(rotation=0)
 plt.grid(axis='y')
 plt.tight_layout()
 plt.savefig('./Data/Parsed/severity_distribution.png')
-plt.show()
+plt.close()
 
 # Plot description length distribution
 df['description_length'] = df['description'].apply(len)
@@ -34,7 +37,7 @@ plt.ylabel('Number of Vulnerabilities')
 plt.grid(axis='y')
 plt.tight_layout()
 plt.savefig('./Data/Parsed/description_length_distribution.png')
-plt.show()
+plt.close()
 
 # Use log scale for y-axis
 plt.figure(figsize=(10, 6))
@@ -45,4 +48,4 @@ plt.ylabel('Number of Vulnerabilities (log scale)')
 plt.grid(axis='y')
 plt.tight_layout()
 plt.savefig('./Data/Parsed/description_length_distribution_log.png')
-plt.show()
+plt.close()
