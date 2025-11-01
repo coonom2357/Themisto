@@ -4,6 +4,7 @@ from enum import Enum
 import pandas as pd
 import json
 import os
+import gzip
 
 
 class SeverityLevel(Enum):
@@ -82,7 +83,8 @@ for file_name in unparsed_data_file_names:
 parsed_data: List[Dict] = []
 
 for file_path in unparsed_data_files:
-    with open(file_path, 'r') as file:
+    with gzip.open(file_path, 'rt', encoding='utf-8') as file:
+
         data = json.load(file)
 
         vulnerabilities: List[Dict] = data["vulnerabilities"]
