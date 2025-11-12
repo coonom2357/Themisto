@@ -1,0 +1,2 @@
+resnetmodel v1 is overfitted
+resnetmodel v2 added data variations, 40 epochs

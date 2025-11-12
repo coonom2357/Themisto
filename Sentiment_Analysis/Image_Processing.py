@@ -1,3 +1,4 @@
+from torchvision import transforms
 import numpy as np
 import pandas as pd
 import kagglehub
@@ -35,11 +36,13 @@ class CustomImageDataset(Dataset):
         label_name = self.img_labels.iloc[idx, 1]
         label = self.label_to_idx[label_name]
         
+        # Apply custom transforms (data augmentation) if provided
         if self.transform:
             image = self.transform(image)
         if self.target_transform:
             label = self.target_transform(label)
         return image, label
+        
 
 if __name__ == "__main__":
     dataset = CustomImageDataset("annotations.csv", ".")
