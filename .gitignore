@@ -1,0 +1,5 @@
+/Data/Parsed/parsed_data.csv
+/Data/Parsed/parsed_data_two.csv
+/Data/Unclean/*.json
+
+DS_Store
