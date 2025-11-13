@@ -1,0 +1,4 @@
+srun --gres=gpu:1 --pty bash
+source venv/bin/activate
+cd Sentiment_Analysis
+module load python/3.9 cuda/13.0

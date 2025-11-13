@@ -51,12 +51,33 @@ if __name__ == "__main__":
 
 SEARCH_ROOT_DIR = "data"
 
-def find_jpg_files(SEARCH_ROOT_DIR):
+def find_jpg_files(SEARCH_ROOT_DIR, max_files=True):
     jpg_file_paths = []
-    for current_dir, _subdirs, files in os.walk(SEARCH_ROOT_DIR):
-        for file_name in files:
-            if file_name.lower().endswith(".jpg"):
-                jpg_file_paths.append(os.path.join(current_dir, file_name))
+    # Step 1: Find minimum number of JPG files across all subdirectories
+    if max_files is True:
+        max_file_counts = []
+        for folder in os.listdir(SEARCH_ROOT_DIR):
+            folder_path = os.path.join(SEARCH_ROOT_DIR, folder)
+            if os.path.isdir(folder_path):
+                count = sum(1 for f in os.listdir(folder_path) if f.lower().endswith(".jpg"))
+                max_file_counts.append(count)
+        max_file_limit = min(max_file_counts)
+    else:
+        max_file_limit = None
+    
+    # Step 2: Collect JPG files, limiting each subdirectory to max_file_limit
+    for folder in os.listdir(SEARCH_ROOT_DIR):
+        folder_path = os.path.join(SEARCH_ROOT_DIR, folder)
+        if os.path.isdir(folder_path):
+            count = 0 
+            for file_name in os.listdir(folder_path):
+                if file_name.lower().endswith(".jpg"):
+                    jpg_file_paths.append(os.path.join(folder_path, file_name))
+                    count += 1
+                    # Stop when we reach the limit for this folder
+                    if max_file_limit is not None and count >= max_file_limit:
+                        break
+    
     return jpg_file_paths
 
 def generate_dataframe(jpg_file_paths):
