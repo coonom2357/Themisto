@@ -28,9 +28,8 @@ class CustomImageDataset(Dataset):
 
     def __getitem__(self, idx):
         img_path = os.path.join(self.img_dir, self.img_labels.iloc[idx, 0])
-        image = decode_image(img_path)
-        # Convert image from uint8 (0-255) to float (0-1) for neural network
-        image = image.float() / 255.0
+        # Load image as PIL Image (not tensor) for transforms
+        image = Image.open(img_path).convert('RGB')
         
         # Get label and convert to integer
         label_name = self.img_labels.iloc[idx, 1]
